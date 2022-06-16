@@ -19,8 +19,8 @@ public:
 int main()
 {
 	vector<vector<int> > A{ { 2 },
-							{ 3, 9 },
-							{ 1, 6, 7 } };
+				{ 3, 9 },
+				{ 1, 6, 7 } };
     Solution ob;
 	cout << ob.minimumTotal(A);
 	return 0;
