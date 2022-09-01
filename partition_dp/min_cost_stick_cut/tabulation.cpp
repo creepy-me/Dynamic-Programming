@@ -9,24 +9,26 @@ using namespace std;
 
 class Solution {
 public:
-    int f(int i,int j,vector<int>& cuts)
-    {
-        if(i>j)
-            return 0;
-        int cost,ans=INT_MAX;
-        for(int id=i;id<=j;id++)
-        {
-            cost=cuts[j+1]-cuts[i-1] + f(i,id-1,cuts) + f(id+1,j,cuts);
-            ans=min(ans,cost);
-        }
-        return ans;
-    }
     int minCost(int n, vector<int>& cuts) {
         cuts.push_back(n);
         cuts.insert(cuts.begin(),0);
         sort(cuts.begin(),cuts.end());
         int t=cuts.size();
-        return f(1,t-2,cuts);
+        vector<vector<int>> dp(t,vector<int>(t,0));
+        for(int i=t-2;i>0;i--)
+        {
+            for(int j=i;j<t-1;j++)
+            {
+                int cost,ans=INT_MAX;
+                for(int id=i;id<=j;id++)
+                {
+                    cost=cuts[j+1]-cuts[i-1] + dp[i][id-1] + dp[id+1][j];
+                    ans=min(ans,cost);
+                }
+                dp[i][j]=ans;
+            }
+        }
+        return dp[1][t-2];
     }
 };
 
